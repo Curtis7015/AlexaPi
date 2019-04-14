@@ -18,6 +18,8 @@
 
 #include <cstdlib>
 
+#include <wiringPi.h>
+
 #include "SampleApp/UIManager.h"
 
 #include <AVSCommon/SDKInterfaces/DialogUXStateObserverInterface.h>
@@ -456,6 +458,8 @@ void UIManager::onCapabilitiesStateChange(
 }
 
 void UIManager::printWelcomeScreen() {
+    digitalWrite (0, LOW);
+    digitalWrite (1, LOW);
     m_executor.submit([]() { ConsolePrinter::simplePrint(ALEXA_WELCOME_MESSAGE); });
 }
 
@@ -524,6 +528,7 @@ void UIManager::printErrorScreen() {
 }
 
 void UIManager::microphoneOff() {
+    digitalWrite (0, HIGH);
     m_executor.submit([]() { ConsolePrinter::prettyPrint("Microphone Off!"); });
 }
 
@@ -547,6 +552,7 @@ void UIManager::printDoNotDisturbScreen() {
 }
 
 void UIManager::microphoneOn() {
+    digitalWrite (0, LOW);
     m_executor.submit([this]() { printState(); });
 }
 
@@ -571,19 +577,25 @@ void UIManager::printState() {
     } else if (m_connectionStatus == avsCommon::sdkInterfaces::ConnectionStatusObserverInterface::Status::CONNECTED) {
         switch (m_dialogState) {
             case DialogUXState::IDLE:
+                digitalWrite (0, LOW);
+                digitalWrite (1, LOW);
                 ConsolePrinter::prettyPrint("Alexa is currently idle!");
                 return;
             case DialogUXState::LISTENING:
                 ConsolePrinter::prettyPrint("Listening...");
+                digitalWrite (1, HIGH);
                 system("play /home/pi/Alexa/sounds/med_ui_wakesound.wav");
                 return;
             case DialogUXState::EXPECTING:
                 ConsolePrinter::prettyPrint("Expecting...");
                 return;
             case DialogUXState::THINKING:
+                digitalWrite (1, LOW);
+                digitalWrite (0, LOW);
                 ConsolePrinter::prettyPrint("Thinking...");
                 return;
             case DialogUXState::SPEAKING:
+                digitalWrite (0, HIGH);
                 ConsolePrinter::prettyPrint("Speaking...");
                 return;
             /*
