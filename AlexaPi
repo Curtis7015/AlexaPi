@@ -1,0 +1,183 @@
+
+
+
+
+				#RUN EVERYTHING AS SUPERUSER
+
+	
+
+
+
+#Updating 
+
+
+
+	sudo apt-get update -y
+
+		sudo apt update -y
+
+	
+
+	sudo apt-get upgrade -y
+
+		sudo apt upgrade -y
+
+
+
+
+
+#Remove Unnecessary Packages
+
+
+
+	sudo apt auto-remove -y
+
+
+
+
+
+#Making a directory to house the entire build
+
+
+
+	cd /home/pi/
+
+		sudo mkdir Alexa
+
+
+
+
+
+#Set Permissons For New Directory
+
+
+
+	sudo chown -R pi:pi Alexa
+
+
+
+#Moving Security Profile Into New Directory
+
+
+
+	cd /home/pi/
+
+		sudo mv /home/pi/Downloads/config.json /home/pi/Alexa
+
+
+#Move Script 
+
+#sudo mv /home/pi/Downloads/AlexaPi-master.zip /home/pi
+
+
+#Change Directory For Downloads
+
+
+
+	cd /home/pi/Alexa
+
+
+
+
+
+#Getting scripts from Amazon for Alexa
+
+	
+
+	wget https://raw.githubusercontent.com/alexa/avs-device-sdk/master/tools/Install/setup.sh \
+
+	wget https://raw.githubusercontent.com/alexa/avs-device-sdk/master/tools/Install/genConfig.sh \
+
+	wget https://raw.githubusercontent.com/alexa/avs-device-sdk/master/tools/Install/pi.sh \
+
+
+
+
+
+#Assigning security profile and running amazon scripts
+
+
+
+	cd /home/pi/Alexa
+
+		sudo bash setup.sh config.json [-s 4321]
+
+
+#Get Sounds And Updated Files For Build
+
+
+
+	cd /home/pi/Alexa
+		
+		git clone https://github.com/Curtis7015/AlexaPi.git
+
+
+#Move Wake Sound To Correct Dir
+
+	
+	sudo cp /home/pi/Alexa/AlexaPi/med/med_ui_wakesound.wav /home/pi/Alexa/sounds/
+
+
+#Make Sure We Have Correct Permissions
+
+	sudo chown -R pi:pi /home/pi/Alexa
+
+
+#Replace UIManager.cpp
+
+
+	sudo rm /home/pi/Alexa/avs-device-sdk/SampleApp/src/UIManager.cpp
+
+		sudo mv /home/pi/Alexa/AlexaPi/UIManager.cpp  /home/pi/Alexa/avs-device-sdk/SampleApp/src 
+
+#Set Focus For Alexa
+
+	sudo rm /home/pi/Alexa/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/FocusManagerInterface.h
+
+		sudo mv /home/pi/Alexa/AlexaPi/FocusManagerInterface.h /home/pi/Alexa/avs-device-sdk/AVSCommon/SDKInterfaces/include/AVSCommon/SDKInterfaces/
+
+#Set LED's For GPIO Pins
+
+	sudo rm /home/pi/Alexa/avs-device-sdk/SampleApp/src/main.cpp
+		
+		sudo mv /home/pi/Alexa/AlexaPi/main.cpp /home/pi/Alexa/avs-device-sdk/SampleApp/src/
+
+
+#Update CMakeLists
+
+	sudo rm /home/pi/Alexa/avs-device-sdk/SampleApp/src/CMakeLists.txt
+
+		sudo mv /home/pi/Alexa/AlexaPi/CMakeLists.txt /home/pi/Alexa/avs-device-sdk/SampleApp/src/
+
+
+#Rebuild Sample App
+
+	cd /home/pi/Alexa/build/SampleApp
+		sudo make
+
+#Reassign Creds
+
+	cd /home/pi/Alexa
+
+		sudo bash setup.sh config.json [-s 4321]
+
+
+#Start Alexa
+
+	cd /home/Pi/Alexa
+
+		sudo bash startsample.sh
+
+
+
+
+
+
+
+######Enjoy#####
+
+
+
+	sudo echo "##########!!!ENJOY!!!##########"
+
+
