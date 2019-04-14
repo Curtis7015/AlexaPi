@@ -167,6 +167,10 @@
 	
 		sudo mv /home/pi/Alexa/AlexPi/bashrc /home/pi/.bashrc
 
+#Set Output Volume 
+
+	sudo amixer cset numid=1 90%
+
 
 #Start Alexa
 
