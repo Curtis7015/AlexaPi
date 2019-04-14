@@ -128,7 +128,7 @@
 
 	sudo rm /home/pi/Alexa/avs-device-sdk/SampleApp/src/UIManager.cpp
 
-		sudo mv /home/pi/Alexa/AlexaPi/UIManager.cpp  /home/pi/Alexa/avs-device-sdk/SampleApp/src 
+		sudo mv /home/pi/Alexa/AlexaPi/UIManager.cpp  /home/pi/Alexa/avs-device-sdk/SampleApp/src/ 
 
 #Set Focus For Alexa
 
