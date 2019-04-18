@@ -63,7 +63,8 @@
 	cd /home/pi/
 
 		sudo mv /home/pi/Downloads/config.json /home/pi/Alexa
-
+		
+		sudo mv /home/pi/config.json /home/pi/Alexa
 
 #Move Script 
 
