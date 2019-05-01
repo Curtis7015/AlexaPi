@@ -167,6 +167,7 @@
 	sudo rm /home/pi/.bashrc
 	
 		sudo cp /home/pi/Alexa/AlexPi/bashrc /home/pi/.bashrc
+		sudo cp /home/pi/AlexaPi/bashrc /home/pi/.bashrc
 
 #Set Audio Output & Volume
 
